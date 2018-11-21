@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+    <div class="row">
+    {% for product in products %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="{{MEDIA_URL}}{{product.image}}" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right">€{{product.price}}</h4>
+                                <h4><a href="{% url 'product_detail' id=product.id %}">{{product.name}}</a>
+                                </h4>
+                                <p>{{product.brand}}</p>
+                                
+                                <form method="POST" action="{% url 'added_to_cart'%}">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="1"/>
+                                    <input type="hidden" name="product" value="{{product.id}}" />
+                                    <input class="btn btn-primary" type="submit" value="Add to cart"/>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+    {% endfor %}
+    </div>
+    </div>
+    
+{% endblock content %}
+
+
+
+
